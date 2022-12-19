@@ -8,13 +8,14 @@ defmodule ProviderMock.Application do
   @impl true
   def start(_type, _args) do
     children = [
+      {ProviderMock.Supervisor, []}
       # Starts a worker by calling: ProviderMock.Worker.start_link(arg)
       # {ProviderMock.Worker, arg}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
-    opts = [strategy: :one_for_one, name: ProviderMock.Supervisor]
+    opts = [strategy: :one_for_one]
     Supervisor.start_link(children, opts)
   end
 end
