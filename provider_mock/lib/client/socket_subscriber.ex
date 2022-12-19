@@ -6,6 +6,8 @@ defmodule ProviderMock.Client.SocketSubscriber do
   use WebSockex
   require Logger
 
+  alias ProviderMock.KafkaProducer
+
   @doc """
   Starts the data source streamer.
   """
@@ -23,6 +25,8 @@ defmodule ProviderMock.Client.SocketSubscriber do
 
   def handle_frame({:text, msg}, state) do
     :ok = Logger.debug("Received #{msg}")
+
+    :ok = KafkaProducer.produce(msg)
 
     {:ok, state}
   end

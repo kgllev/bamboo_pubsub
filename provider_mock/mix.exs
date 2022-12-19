@@ -7,7 +7,8 @@ defmodule ProviderMock.MixProject do
       version: "0.1.0",
       elixir: "~> 1.14",
       start_permanent: Mix.env() == :prod,
-      deps: deps()
+      deps: deps(),
+      aliases: aliases()
     ]
   end
 
@@ -24,10 +25,29 @@ defmodule ProviderMock.MixProject do
     [
       {:websockex, "~> 0.4.3"},
       {:jason, "~> 1.4"},
+      {:kaffe, "~> 1.0"},
 
       ## Code Analysis
       {:credo, "~> 1.6", only: [:dev, :test], runtime: false},
       {:dialyxir, "~> 1.1", only: [:dev, :test], runtime: false}
+    ]
+  end
+
+  # Aliases are shortcuts or tasks specific to the current project.
+  # For example, to install project dependencies and perform other setup tasks, run:
+  #
+  #     $ mix setup
+  #
+  # See the documentation for `Mix` for more info on aliases.
+  defp aliases do
+    [
+      setup: ["deps.get"],
+      check: [
+        "compile --warnings-as-errors",
+        "format --check-formatted",
+        "credo --strict",
+        "dialyzer --format short"
+      ]
     ]
   end
 end
