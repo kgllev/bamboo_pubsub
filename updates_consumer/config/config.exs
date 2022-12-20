@@ -60,6 +60,42 @@ config :logger, :console,
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 
+# Company Updates Consumer Config
+config :updates_consumer, UpdatesConsumer.Workers.CompanyEventsHandler,
+  producer: [
+    module:
+      {BroadwayKafka.Producer,
+       [
+         hosts: [
+           {System.get_env("EVENTS_KAFKA_URL", "pkc-6ojv2.us-west4.gcp.confluent.cloud"),
+            System.get_env("EVENTS_KAFKA_PORT", "9092") |> String.to_integer()}
+         ],
+         group_id: System.get_env("EVENTS_KAFKA_GROUP_ID", "cnsumer"),
+         topics: [
+           System.get_env("EVENTS_KAFKA_TOPIC", "company-updates")
+         ],
+         receive_interval: 1000,
+         client_config: [
+           connect_timeout: 10_000,
+           ssl: true,
+           sasl: {
+             :plain,
+             System.get_env("KAFKA_KEY", "2FKXL5HKIIAWLV67"),
+             System.get_env(
+               "KAFKA_SECRET",
+               "PxrLz7bwGVXZ5C6QrHD3fb6FUtfGph/Wq8h7jA11QNXZFMEtPW79WorlZ2IHF1wt"
+             )
+           }
+         ]
+       ]},
+    concurrency: 10
+  ],
+  processors: [
+    default: [
+      concurrency: 4
+    ]
+  ]
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{config_env()}.exs"

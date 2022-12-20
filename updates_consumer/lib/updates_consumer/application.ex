@@ -17,9 +17,9 @@ defmodule UpdatesConsumer.Application do
       # Start Finch
       {Finch, name: UpdatesConsumer.Finch},
       # Start the Endpoint (http/https)
-      UpdatesConsumerWeb.Endpoint
-      # Start a worker by calling: UpdatesConsumer.Worker.start_link(arg)
-      # {UpdatesConsumer.Worker, arg}
+      UpdatesConsumerWeb.Endpoint,
+      # Company updates events handler
+      {UpdatesConsumer.Workers.CompanyEventsSupervisor, []}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
