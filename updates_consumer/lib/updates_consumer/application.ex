@@ -19,7 +19,11 @@ defmodule UpdatesConsumer.Application do
       # Start the Endpoint (http/https)
       UpdatesConsumerWeb.Endpoint,
       # Company updates events handler
-      {UpdatesConsumer.Workers.CompanyEventsSupervisor, []}
+      {UpdatesConsumer.Workers.CompanyEventsSupervisor, []},
+      # Emails Task Supervisor
+      {Task.Supervisor, name: UpdatesConsumer.Fanout.EmailSupervisor},
+      # Websockets Task Supervisor
+      {Task.Supervisor, name: UpdatesConsumer.Fanout.WebsocketsSupervisor}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

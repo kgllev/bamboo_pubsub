@@ -3,9 +3,9 @@ alias UpdatesConsumer.Companies
 
 # Create clients
 
-{:ok, %{id: client_1}} = Accounts.create_client(%{name: "client_1"})
-{:ok, %{id: client_2}} = Accounts.create_client(%{name: "client_2"})
-{:ok, %{id: client_3}} = Accounts.create_client(%{name: "client_3"})
+{:ok, %{id: client_1}} = Accounts.create_client(%{email: "client_1@bambooinvestments.com"})
+{:ok, %{id: client_2}} = Accounts.create_client(%{email: "client_2@bambooinvestments.com"})
+{:ok, %{id: client_3}} = Accounts.create_client(%{email: "client_3@bambooinvestments.com"})
 
 # Create Company Stocks
 

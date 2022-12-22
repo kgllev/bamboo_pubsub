@@ -55,6 +55,16 @@ defmodule UpdatesConsumer.Companies do
     |> Repo.insert()
   end
 
+  def upsert_stock(%{symbol: symbol} = params) do
+    case Repo.get_by(Stock, symbol: symbol) do
+      nil ->
+        create_stock(params)
+
+      stock ->
+        update_stock(stock, params)
+    end
+  end
+
   @doc """
   Updates a stock.
 

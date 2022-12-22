@@ -10,7 +10,7 @@ defmodule UpdatesConsumer.Accounts.Client do
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
   schema "clients" do
-    field :name, :string
+    field :email, :string
     has_many :subscriptions, Subscription
 
     timestamps()
@@ -19,7 +19,7 @@ defmodule UpdatesConsumer.Accounts.Client do
   @doc false
   def changeset(client, attrs) do
     client
-    |> cast(attrs, [:name])
-    |> validate_required([:name])
+    |> cast(attrs, [:email])
+    |> validate_required([:email])
   end
 end

@@ -4,7 +4,7 @@ defmodule UpdatesConsumer.Repo.Migrations.CreateClients do
   def change do
     create table(:clients, primary_key: false) do
       add :id, :binary_id, primary_key: true
-      add :name, :string
+      add :email, :string
 
       timestamps()
     end

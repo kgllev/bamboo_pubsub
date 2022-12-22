@@ -113,8 +113,11 @@ defmodule UpdatesConsumer.Accounts do
       [%Subscription{}, ...]
 
   """
-  def list_subscriptions do
-    Repo.all(Subscription)
+  def list_subscriptions(stock_id) do
+    Subscription
+    |> where([s], s.stock_id == ^stock_id)
+    |> Repo.all()
+    |> Repo.preload(:client)
   end
 
   @doc """
