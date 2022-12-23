@@ -6,7 +6,7 @@ Clone the repo
 git@github.com:kgllev/bamboo_assignment.git
 ```
 
-Install Elixir version `1.14.2` and Erlang `25.0`
+Install Elixir version `1.14.2` and Erlang version `25.0`
 
 On the root folder(bamboo_assignment), open terminal to start the mock provider
 
