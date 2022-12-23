@@ -15,3 +15,9 @@ cd updates_consumer && mix setup && iex -S mix phx.server
 ```
 
 This will start the updates_consumer responsible for consuming events published by the provider_mock, create tables and seed initial data
+
+## Testing
+
+```
+cd updates_consumer && mix setup && mix test
+```
