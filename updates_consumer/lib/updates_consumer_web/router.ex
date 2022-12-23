@@ -20,7 +20,7 @@ defmodule UpdatesConsumerWeb.Router do
     get "/", PageController, :home
   end
 
-  scope "/", UpdatesConsumerWeb do
+  scope "/api", UpdatesConsumerWeb do
     pipe_through :api
     get "/companies", CompanyController, :index
   end
