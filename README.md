@@ -8,7 +8,7 @@ git@github.com:kgllev/bamboo_pubsub.git
 
 Install Elixir version `1.14.2` and Erlang version `25.0`
 
-On the root folder(bamboo_assignment), open terminal to start the mock provider
+On the root folder(bamboo_pubsub), open terminal to start the mock provider
 
 ```
 cd provider_mock && mix deps.get && mix compile && iex -S mix
