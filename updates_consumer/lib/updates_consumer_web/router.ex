@@ -20,6 +20,11 @@ defmodule UpdatesConsumerWeb.Router do
     get "/", PageController, :home
   end
 
+  scope "/", UpdatesConsumerWeb do
+    pipe_through :api
+    get "/companies", CompanyController, :index
+  end
+
   # Other scopes may use custom stacks.
   # scope "/api", UpdatesConsumerWeb do
   #   pipe_through :api

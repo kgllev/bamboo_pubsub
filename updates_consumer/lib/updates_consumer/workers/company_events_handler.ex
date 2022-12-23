@@ -4,8 +4,9 @@ defmodule UpdatesConsumer.Workers.CompanyEventsHandler do
   """
 
   use Broadway
-  alias Broadway.Message
   require Logger
+  alias Broadway.Message
+  alias UpdatesConsumer.Fanout
 
   ## API
 
@@ -25,6 +26,8 @@ defmodule UpdatesConsumer.Workers.CompanyEventsHandler do
     case Poison.decode(data) do
       {:ok, update} ->
         Logger.info("Recieved company update event #{inspect(update)}")
+
+        :ok = Fanout.run(update)
 
         :ok = collect_metrics(:processed)
 

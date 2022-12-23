@@ -17,6 +17,7 @@ defmodule UpdatesConsumer.Application do
       # Start Finch
       {Finch, name: UpdatesConsumer.Finch},
       # Start the Endpoint (http/https)
+      {Task.Supervisor, name: UpdatesConsumer.AsyncEmailSupervisor},
       UpdatesConsumerWeb.Endpoint,
       # Company updates events handler
       {UpdatesConsumer.Workers.CompanyEventsSupervisor, []},

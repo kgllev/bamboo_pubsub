@@ -10,32 +10,14 @@ defmodule UpdatesConsumer.Companies do
 
   @doc """
   Returns the list of stocks.
-
   ## Examples
-
       iex> list_stocks()
       [%Stock{}, ...]
-
   """
+  @spec list_stocks() :: list()
   def list_stocks do
     Repo.all(Stock)
   end
-
-  @doc """
-  Gets a single stock.
-
-  Raises `Ecto.NoResultsError` if the Stock does not exist.
-
-  ## Examples
-
-      iex> get_stock!(123)
-      %Stock{}
-
-      iex> get_stock!(456)
-      ** (Ecto.NoResultsError)
-
-  """
-  def get_stock!(id), do: Repo.get!(Stock, id)
 
   @doc """
   Creates a stock.
@@ -49,12 +31,26 @@ defmodule UpdatesConsumer.Companies do
       {:error, %Ecto.Changeset{}}
 
   """
+  @spec create_stock(map()) :: {:ok, Stock.t()} | {:error, Changeset.t()}
   def create_stock(attrs \\ %{}) do
     %Stock{}
     |> Stock.changeset(attrs)
     |> Repo.insert()
   end
 
+  @doc """
+  Creates or updates stock.
+
+  ## Examples
+
+      iex> upsert_stock(%{field: value})
+      {:ok, %Stock{}}
+
+      iex> upsert_stock(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  @spec upsert_stock(map()) :: {:ok, Stock.t()} | {:error, Changeset.t()}
   def upsert_stock(%{symbol: symbol} = params) do
     case Repo.get_by(Stock, symbol: symbol) do
       nil ->
@@ -77,38 +73,10 @@ defmodule UpdatesConsumer.Companies do
       {:error, %Ecto.Changeset{}}
 
   """
+  @spec update_stock(Stock.t(), map()) :: {:ok, Stock.t()} | {:error, Changeset.t()}
   def update_stock(%Stock{} = stock, attrs) do
     stock
     |> Stock.changeset(attrs)
     |> Repo.update()
-  end
-
-  @doc """
-  Deletes a stock.
-
-  ## Examples
-
-      iex> delete_stock(stock)
-      {:ok, %Stock{}}
-
-      iex> delete_stock(stock)
-      {:error, %Ecto.Changeset{}}
-
-  """
-  def delete_stock(%Stock{} = stock) do
-    Repo.delete(stock)
-  end
-
-  @doc """
-  Returns an `%Ecto.Changeset{}` for tracking stock changes.
-
-  ## Examples
-
-      iex> change_stock(stock)
-      %Ecto.Changeset{data: %Stock{}}
-
-  """
-  def change_stock(%Stock{} = stock, attrs \\ %{}) do
-    Stock.changeset(stock, attrs)
   end
 end

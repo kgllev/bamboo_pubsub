@@ -6,6 +6,8 @@ defmodule UpdatesConsumer.Fanout do
 
   alias UpdatesConsumer.Accounts
   alias UpdatesConsumer.Companies
+  alias UpdatesConsumerWeb.Adapters.MailAdapter
+  alias UpdatesConsumerWeb.Adapters.SocketAdapter
 
   # def start_link(opts) do
   # end
@@ -23,21 +25,25 @@ defmodule UpdatesConsumer.Fanout do
   end
 
   defp send_websocket_update(%{subscribers: subscribers, stock: stock}) do
-    Task.Supervisor.start_child(
-      UpdatesConsumer.Fanout.WebsocketsSupervisor,
-      ScketAdapter,
-      :send_updates,
-      [subscribers, stock]
-    )
+    {:ok, _pid} =
+      Task.Supervisor.start_child(
+        UpdatesConsumer.Fanout.WebsocketsSupervisor,
+        SocketAdapter,
+        :send_company_update,
+        [subscribers, stock]
+      )
+
+    :ok
   end
 
   defp send_emails(%{subscribers: subscribers, stock: stock}) do
-    Task.Supervisor.start_child(
-      UpdatesConsumer.Fanout.EmailSupervisor,
-      Mailer,
-      :send_emails,
-      [subscribers, stock]
-    )
+    {:ok, _pid} =
+      Task.Supervisor.start_child(
+        UpdatesConsumer.Fanout.EmailSupervisor,
+        MailAdapter,
+        :send_stock_email_updates,
+        [subscribers, stock]
+      )
 
     %{subscribers: subscribers, stock: stock}
   end
@@ -54,11 +60,11 @@ defmodule UpdatesConsumer.Fanout do
   end
 
   defp format_event(event) when is_map(event) do
-    %{symbol: event["s"], price: event["p"]}
+    %{symbol: event["S"], price: event["p"]}
   end
 
   defp format_event([stock | _rest]) do
-    %{symbol: stock["s"], price: stock["p"]}
+    %{symbol: stock["S"], price: stock["p"]}
   end
 
   defp format_stock(stock) do
