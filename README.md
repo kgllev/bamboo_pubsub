@@ -3,7 +3,7 @@
 Clone the repo
 
 ```
-git@github.com:kgllev/bamboo_assignment.git
+git@github.com:kgllev/bamboo_pubsub.git
 ```
 
 Install Elixir version `1.14.2` and Erlang version `25.0`
